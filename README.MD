@@ -8,10 +8,11 @@ I acknowledge that this repository is not very silly. The name is thus subject t
 - Treating energizer ticks as a counter
 - #darken and #undarken commands
 - Player-shootable stars (and bombs?)
+  - Modified ElementStarTick to handle player-sourced stars correctly (they go anti-seek)
 - Customizable player color (per board?)
 - Walkable and pushable object variants
 
-Note: None of these are implemented yet. I've just messed with the source code enough to determine that they are likely feasible.
+Note: None of these are fully implemented yet. I've just messed with the source code enough to determine that they are likely feasible.
 
 Eventually these changes may be added to [the OpenZoo patch collection](https://github.com/asiekierka/OpenZoo).
 

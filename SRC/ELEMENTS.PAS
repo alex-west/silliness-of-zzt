@@ -682,8 +682,16 @@ procedure ElementStarTick(statId: integer);
 				RemoveStat(statId);
 			end else if (P2 mod 2) = 0 then begin
 				CalcDirectionSeek(X, Y, StepX, StepY);
+				if (P1 = SHOT_SOURCE_PLAYER) and (World.Info.EnergizerTicks <= 0)
+				then begin
+					StepX := -StepX;
+					StepY := -StepY;
+				end;
+				
 				with Board.Tiles[X + StepX][Y + StepY] do begin
-					if (Element = E_PLAYER) or (Element = E_BREAKABLE) then begin
+					if (ElementDefs[Element].Destructible
+					and ((Element = E_PLAYER) or (P1 = SHOT_SOURCE_PLAYER)))
+					or (Element = E_BREAKABLE) then begin
 						BoardAttack(statId, X + StepX, Y + StepY);
 					end else begin
 						if not ElementDefs[Element].Walkable then
@@ -1317,6 +1325,7 @@ procedure ElementPlayerTick(statId: integer);
 		unk1, unk2, unk3: integer;
 		i: integer;
 		bulletCount: integer;
+		shotElement: integer;
 	begin
 		with Board.Stats[statId] do begin
 			if World.Info.EnergizerTicks > 0 then begin
@@ -1364,13 +1373,14 @@ procedure ElementPlayerTick(statId: integer);
 							DisplayMessage(200, 'You don'#39't have any ammo!');
 						MessageOutOfAmmoNotShown := false;
 					end else begin
+						shotElement := E_STAR;
 						bulletCount := 0;
 						for i := 0 to Board.StatCount do
 							if (Board.Tiles[Board.Stats[i].X][Board.Stats[i].Y].Element = E_BULLET) and (Board.Stats[i].P1 = 0) then
 								bulletCount := bulletCount + 1;
 
 						if bulletCount < Board.Info.MaxShots then begin
-							if BoardShoot(E_BULLET, X, Y, PlayerDirX, PlayerDirY, SHOT_SOURCE_PLAYER) then begin
+							if BoardShoot(shotElement, X, Y, PlayerDirX, PlayerDirY, SHOT_SOURCE_PLAYER) then begin
 								World.Info.Ammo := World.Info.Ammo - 1;
 								GameUpdateSidebar;
 
