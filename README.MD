@@ -2,6 +2,8 @@
 
 This fork of [the Reconstruction of ZZT](https://github.com/asiekierka/reconstruction-of-zzt) is mainly a place for me to experiment adding some minor functionality to ZZT. It's not really a bug-fixing operation or a source port to modern platforms --- other individuals are already doing those things, and I don't intend to copy their work.
 
+I acknowledge that this repository is not very silly. The name is thus subject to change.
+
 ## Planned Features
 - Treating energizer ticks as a counter
 - #darken and #undarken commands
@@ -11,7 +13,7 @@ This fork of [the Reconstruction of ZZT](https://github.com/asiekierka/reconstru
 
 Note: None of these are implemented yet. I've just messed with the source code enough to determine that they are likely feasible.
 
-Eventually these changes may be added to [the OpenZoo patch collection].
+Eventually these changes may be added to [the OpenZoo patch collection](https://github.com/asiekierka/OpenZoo).
 
 ## License
 
