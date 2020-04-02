@@ -1373,7 +1373,10 @@ procedure ElementPlayerTick(statId: integer);
 							DisplayMessage(200, 'You don'#39't have any ammo!');
 						MessageOutOfAmmoNotShown := false;
 					end else begin
-						shotElement := E_STAR;
+						shotElement := E_BULLET;
+						if (World.Info.EnergizerTicks > 0) then
+							shotElement := E_STAR;
+						
 						bulletCount := 0;
 						for i := 0 to Board.StatCount do
 							if (Board.Tiles[Board.Stats[i].X][Board.Stats[i].Y].Element = E_BULLET) and (Board.Stats[i].P1 = 0) then
