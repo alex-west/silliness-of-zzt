@@ -24,13 +24,17 @@ I acknowledge that this repository is not very silly. The name is thus subject t
   - The "isdark" condition returns true if the board is dark
   - I'm open to suggestions for better names here.
 
+- EnergizerTicks and TorchTicks are now ZZT-OOP counters
+  - EnergizerTicks = "ENERGY"
+  - TorchTicks = "WICK"
+  - The standard #give, #take, and ?cheat operations apply
+  - Note: giving or cheating yourself energy will not play the energizer song.
+
 ## Planned Features
 These features appear to be feasible to add, based on my understanding of the source code:
 
 - Player-shootable bombs (pre-lit?)
 - Commands or controls or cheats to allow the ammo type to be changed
-- Treating energizer ticks as a counter (#give, #take, ?cheat)
-- #darken and #undarken commands, and isdark condition
 - Pushable object variant (maybe walkable too)
 
 Eventually these changes may be added to [the OpenZoo patch collection](https://github.com/asiekierka/OpenZoo).
