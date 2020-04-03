@@ -18,6 +18,12 @@ I acknowledge that this repository is not very silly. The name is thus subject t
 	- Energizer and damage color cycling were removed
 	- When the game is paused after using a passage, the passage underneath the player is not displayed
 
+- ZZT-OOP commands regarding board darkness
+  - The "#darken" command darkens the board
+  - The "#brighten" command undarkens the board
+  - The "isdark" condition returns true if the board is dark
+  - I'm open to suggestions for better names here.
+
 ## Planned Features
 These features appear to be feasible to add, based on my understanding of the source code:
 

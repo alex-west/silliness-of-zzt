@@ -461,10 +461,11 @@ function OopCheckCondition(statId: integer; var position: integer): boolean;
 			end else if OopWord = 'ANY' then begin
 				if not OopParseTile(statId, position, tile) then
 					OopError(statId, 'Bad object kind');
-
 				ix := 0;
 				iy := 1;
 				OopCheckCondition := FindTileOnBoard(ix, iy, tile);
+			end else if OopWord = 'ISDARK' then begin
+				OopCheckCondition := Board.Info.IsDark;
 			end else begin
 				OopCheckCondition := WorldGetFlagPosition(OopWord) >= 0;
 			end;
@@ -794,6 +795,12 @@ procedure OopExecute(statId: integer; var position: integer; name: TString50);
 								DataLen := Board.Stats[bindStatId].DataLen;
 								position := 0;
 							end;
+						end else if OopWord = 'DARKEN' then begin
+							Board.Info.IsDark := true;
+							TransitionDrawToBoard
+						end else if OopWord = 'BRIGHTEN' then begin
+							Board.Info.IsDark := false;
+							TransitionDrawToBoard
 						end else begin
 							textLine := OopWord;
 							if OopSend(statId, OopWord, false) then begin
