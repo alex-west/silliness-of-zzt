@@ -270,7 +270,6 @@ procedure BoardOpen(boardId: integer);
 procedure BoardChange(boardId: integer);
 	begin
 		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element := E_PLAYER;
-		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := ElementDefs[E_PLAYER].Color;
 		BoardClose;
 		BoardOpen(boardId);
 	end;
@@ -1172,7 +1171,7 @@ procedure DamageStat(attackerStatId: integer);
 					GameUpdateSidebar;
 					DisplayMessage(100, 'Ouch!');
 
-					Board.Tiles[X][Y].Color := $70 + (ElementDefs[E_PLAYER].Color mod $10);
+					{ TODO: Find a replacement for the old color cycling. }
 
 					if World.Info.Health > 0 then begin
 						World.Info.BoardTimeSec := 0;
@@ -1180,14 +1179,7 @@ procedure DamageStat(attackerStatId: integer);
 							SoundQueue(4, #32#1#35#1#39#1#48#1#16#1);
 
 							{ Move player to start }
-							Board.Tiles[X][Y].Element := E_EMPTY;
-							BoardDrawTile(X, Y);
-							oldX := X;
-							oldY := Y;
-							X := Board.Info.StartPlayerX;
-							Y := Board.Info.StartPlayerY;
-							DrawPlayerSurroundings(oldX, oldY, 0);
-							DrawPlayerSurroundings(X, Y, 0);
+							MoveStat(0, Board.Info.StartPlayerX, Board.Info.StartPlayerY);
 
 							GamePaused := true;
 						end;
@@ -1337,13 +1329,9 @@ procedure BoardPassageTeleport(x, y: integer);
 					newX := ix;
 					newY := iy;
 				end;
-
-		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element := E_EMPTY;
-		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := 0;
-		if newX <> 0 then begin
-			Board.Stats[0].X := newX;
-			Board.Stats[0].Y := newY;
-		end;
+		
+		if newX <> 0 then
+			MoveStat(0, newX, newY);
 
 		GamePaused := true;
 		SoundQueue(4, #48#1#52#1#55#1#49#1#53#1#56#1#50#1#54#1#57#1#51#1#55#1#58#1#52#1#56#1#64#1);
@@ -1498,9 +1486,9 @@ procedure GamePlayLoop(boardChanged: boolean);
 		end;
 
 		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element := GameStateElement;
-		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := ElementDefs[GameStateElement].Color;
 
 		if GameStateElement = E_MONITOR then begin
+			Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := ElementDefs[GameStateElement].Color;
 			DisplayMessage(0, '');
 			VideoWriteText(62, 5, $1B, 'Pick a command:');
 		end;
@@ -1522,7 +1510,8 @@ procedure GamePlayLoop(boardChanged: boolean);
 
 				if pauseBlink then begin
 					VideoWriteText(Board.Stats[0].X - 1, Board.Stats[0].Y - 1,
-						ElementDefs[E_PLAYER].Color, ElementDefs[E_PLAYER].Character);
+						Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color,
+						ElementDefs[E_PLAYER].Character);
 				end else begin
 					if Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element = E_PLAYER then
 						VideoWriteText(Board.Stats[0].X - 1, Board.Stats[0].Y - 1, $0F, ' ')
@@ -1552,7 +1541,6 @@ procedure GamePlayLoop(boardChanged: boolean);
 						Board.Stats[0].X := Board.Stats[0].X + InputDeltaX;
 						Board.Stats[0].Y := Board.Stats[0].Y + InputDeltaY;
 						Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element := E_PLAYER;
-						Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := ElementDefs[E_PLAYER].Color;
 						BoardDrawTile(Board.Stats[0].X, Board.Stats[0].Y);
 						DrawPlayerSurroundings(Board.Stats[0].X, Board.Stats[0].Y, 0);
 						DrawPlayerSurroundings(Board.Stats[0].X - InputDeltaX, Board.Stats[0].Y - InputDeltaY, 0);
@@ -1602,7 +1590,6 @@ procedure GamePlayLoop(boardChanged: boolean);
 		end;
 
 		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Element := E_PLAYER;
-		Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := ElementDefs[E_PLAYER].Color;
 
 		SoundBlockQueueing := false;
 	end;

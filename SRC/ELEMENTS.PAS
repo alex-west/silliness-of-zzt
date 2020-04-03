@@ -1334,14 +1334,10 @@ procedure ElementPlayerTick(statId: integer);
 				else
 					ElementDefs[E_PLAYER].Character := #2;
 
-				if (CurrentTick mod 2) <> 0 then
-					Board.Tiles[X][Y].Color := $0F
-				else
-					Board.Tiles[X][Y].Color := (((CurrentTick mod 7) + 1) * 16) + $0F;
-
+				{ TODO: Find a replacement for energizer color cycling. }
+				
 				BoardDrawTile(X, Y);
-			end else if (Board.Tiles[X][Y].Color <> $1F) or (ElementDefs[E_PLAYER].Character <> #2) then begin
-				Board.Tiles[X][Y].Color := $1F;
+			end else if (ElementDefs[E_PLAYER].Character <> #2) then begin
 				ElementDefs[E_PLAYER].Character := #2;
 				BoardDrawTile(X, Y);
 			end;
@@ -1484,7 +1480,6 @@ procedure ElementPlayerTick(statId: integer);
 				if World.Info.EnergizerTicks = 10 then
 					SoundQueue(9, #32#3#26#3#23#3#22#3#21#3#19#3#16#3)
 				else if World.Info.EnergizerTicks <= 0 then begin
-					Board.Tiles[X][Y].Color := ElementDefs[E_PLAYER].Color;
 					BoardDrawTile(X, Y);
 				end;
 			end;

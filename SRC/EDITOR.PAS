@@ -846,6 +846,9 @@ procedure EditorLoop;
 								and (ElementDefs[iElem].EditorShortcut = UpCase(InputKeyPressed)) then
 							begin
 								if iElem = E_PLAYER then begin
+									{ color = "choice on blue" }
+									elemMenuColor := cursorColor + $10;
+									Board.Tiles[Board.Stats[0].X][Board.Stats[0].Y].Color := elemMenuColor;
 									if EditorPrepareModifyTile(cursorX, cursorY) then
 										MoveStat(0, cursorX, cursorY);
 								end else begin

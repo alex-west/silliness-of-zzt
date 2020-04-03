@@ -4,15 +4,28 @@ This fork of [the Reconstruction of ZZT](https://github.com/asiekierka/reconstru
 
 I acknowledge that this repository is not very silly. The name is thus subject to change.
 
-## Planned Features
-- Treating energizer ticks as a counter
-- #darken and #undarken commands
-- Player-shootable stars (and bombs?)
-  - Modified ElementStarTick to handle player-sourced stars correctly (they go anti-seek)
-- Customizable player color (per board?)
-- Walkable and pushable object variants
+## Implemented Features
 
-Note: None of these are fully implemented yet. I've just messed with the source code enough to determine that they are likely feasible.
+- Player-shootable stars
+  - Modified ElementStarTick to handle player-sourced stars correctly (they go anti-seek)
+  - Player shoots stars when using an energizer
+  - Known issue: Stars don't give the player score
+ 
+- Customizable player color (per board)
+  - Removed the instances where the game forces the default color.
+  - Modified the editor to change the player color to "choice on dark blue", though any color should work in theory (but KevEdit apparently forces the default color for it as well...)
+  - Known issues
+	- Energizer and damage color cycling were removed
+	- When the game is paused after using a passage, the passage underneath the player is not displayed
+
+## Planned Features
+These features appear to be feasible to add, based on my understanding of the source code:
+
+- Player-shootable bombs (pre-lit?)
+- Commands or controls or cheats to allow the ammo type to be changed
+- Treating energizer ticks as a counter (#give, #take, ?cheat)
+- #darken and #undarken commands, and isdark condition
+- Pushable object variant (maybe walkable too)
 
 Eventually these changes may be added to [the OpenZoo patch collection](https://github.com/asiekierka/OpenZoo).
 
