@@ -1382,6 +1382,13 @@ procedure GameDebugPrompt;
 		else if input = 'DARK' then begin
 			Board.Info.IsDark := toggle;
 			TransitionDrawToBoard;
+		end else if input = 'ENERGY' then
+			World.Info.EnergizerTicks := World.Info.EnergizerTicks + 75
+		else if input = 'WICK' then begin
+			if Board.Info.IsDark then begin
+				World.Info.TorchTicks := World.Info.TorchTicks + TORCH_DURATION;
+				DrawPlayerSurroundings(Board.Stats[0].X, Board.Stats[0].Y, 0);
+			end;
 		end else if input = 'ZAP' then begin
 			for i := 0 to 3 do begin
 				BoardDamageTile(Board.Stats[0].X + NeighborDeltaX[i], Board.Stats[0].Y + NeighborDeltaY[i]);

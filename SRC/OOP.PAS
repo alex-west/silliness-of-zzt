@@ -669,6 +669,10 @@ procedure OopExecute(statId: integer; var position: integer; name: TString50);
 								counterPtr := @World.Info.Score
 							else if OopWord = 'TIME' then
 								counterPtr := @World.Info.BoardTimeSec
+							else if OopWord = 'ENERGY' then
+								counterPtr := @World.Info.EnergizerTicks
+							else if OopWord = 'WICK' then
+								counterPtr := @World.Info.TorchTicks
 							else
 								counterPtr := nil;
 
@@ -680,6 +684,10 @@ procedure OopExecute(statId: integer; var position: integer; name: TString50);
 
 									if (counterPtr^ + OopValue) >= 0 then begin
 										counterPtr^ := counterPtr^ + OopValue;
+										{ Redraw torch area is WICK is changed }
+										if counterPtr = @World.Info.TorchTicks then
+											DrawPlayerSurroundings(Board.Stats[0].X, Board.Stats[0].Y, 0);
+										
 									end else begin
 										goto ReadCommand;
 									end;
