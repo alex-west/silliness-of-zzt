@@ -28,8 +28,15 @@ I acknowledge that this repository is not very silly. The name is thus subject t
   - EnergizerTicks = "ENERGY"
   - TorchTicks = "WICK"
   - The standard #give, #take, and ?cheat operations apply
-  - Note: giving or cheating yourself energy will not play the energizer song.
+  - Note: #giving or cheating yourself energy will not play the energizer song. You shoud write your own music.
 
+- Examples of how to have a keypress set a flag or send a message
+  - These changes can be found towards the end of the procedure ElementPlayerTick(), and are easy enough that even you could so them.
+  - Pressing 'Z' is equivalent to "#send all:test"
+    - For performance reasons, one could change "all" to a specific object name (eg. "inventory:do")
+  - Pressing 'X' is equivalent to "#set test" or "?+test"
+  - Both of these examples check if the player statID is 0, in order to avoid spurious effects from player clones elsewhere in the stat list.
+  
 ## Planned Features
 These features appear to be feasible to add, based on my understanding of the source code:
 

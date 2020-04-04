@@ -1461,6 +1461,18 @@ procedure ElementPlayerTick(statId: integer);
 					GameDebugPrompt;
 					InputKeyPressed := #0;
 				end;
+				{ Send a special label }
+				'Z': begin 
+					{ Check if statID is 0 so player clones don't do this }
+					if statID = 0 then
+						if OopSend(0, 'ALL:TEST', false) then begin end;
+				end;
+				{ Set a special flag }
+				'X': begin
+					{ Check if statID is 0 so player clones don't do this }
+					if statID = 0 then
+						WorldSetFlag('TEST');
+				end;				
 			end;
 
 			if World.Info.TorchTicks > 0 then begin
