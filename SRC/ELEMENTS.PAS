@@ -42,6 +42,7 @@ implementation
 uses Crt, Video, Sounds, Input, TxtWind, Editor, Oop, Game;
 
 const
+	ForestSoundTable: array[0 .. 7] of byte = ($45, $40, $47, $50, $46, $41, $48, $51);
 	TransporterNSChars: string = '^~^-v_v-';
 	TransporterEWChars: string = '(<('#179')>)'#179;
 	StarAnimChars: string = #179'/'#196'\';
@@ -1203,7 +1204,8 @@ procedure ElementForestTouch(x, y: integer; sourceStatId: integer; var deltaX, d
 		Board.Tiles[x][y].Element := E_EMPTY;
 		BoardDrawTile(x, y);
 
-		SoundQueue(3, #57#1);
+		ForestSoundTableIdx := (ForestSoundTableIdx + 1) and 7;
+		SoundQueue(3, Chr(ForestSoundTable[ForestSoundTableIdx]) + #1);
 
 		if MessageForestNotShown then begin
 			DisplayMessage(200, 'A path is cleared through the forest.');

@@ -152,6 +152,7 @@ interface
 		unkVar_0476: integer;
 		unkVar_0478: integer;
 
+		ForestSoundTableIdx: integer;
 		TransitionTable: array[1 .. 80*25] of TCoord;
 		LoadedGameFileName: TString50;
 		SavedGameFileName: TString50;
